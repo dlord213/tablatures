@@ -3,7 +3,13 @@ import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  Text,
+  ToastAndroid,
+  View,
+} from "react-native";
 import SearchHeader from "./components/search_header";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link } from "expo-router";
@@ -103,7 +109,23 @@ export default function Page() {
               </Link>
             );
           })}
-          <Buttons length={data.length} />
+          <Buttons
+            length={data.length}
+            prevTap={() => {
+              if (positionNums[0] == 0) {
+                ToastAndroid.show("No more next list.", ToastAndroid.SHORT);
+              } else {
+                setPositionNums([positionNums[0] - 8, positionNums[1] - 8]);
+              }
+            }}
+            nextTap={() => {
+              if (positionNums[1] >= data.length) {
+                ToastAndroid.show("No more next list.", ToastAndroid.SHORT);
+              } else {
+                setPositionNums([positionNums[0] + 8, positionNums[1] + 8]);
+              }
+            }}
+          />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

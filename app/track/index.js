@@ -13,6 +13,7 @@ import axios from "axios";
 import { Link } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useColorScheme } from "nativewind";
+import { ChordsOverWordsFormatter, ChordsOverWordsParser } from "chordsheetjs";
 
 export default function Page() {
   const { colorScheme, toggleColorScheme } = useColorScheme();
@@ -27,6 +28,9 @@ export default function Page() {
     year_album: null,
     lyrics: null,
   });
+
+  const parser = new ChordsOverWordsParser();
+  const formatter = new ChordsOverWordsFormatter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,11 +55,14 @@ export default function Page() {
           trackLyrics = $(elem).text().replace("hide this tab", "").trim();
         });
 
+        const parsed = parser.parse(trackLyrics);
+        const formattedLyrics = formatter.format(parsed);
+
         setData({
           artistName: artist,
           trackName: track,
           year_album: yearAlbum,
-          lyrics: trackLyrics,
+          lyrics: formattedLyrics,
         });
 
         setIsDataFetched(true);
@@ -73,7 +80,10 @@ export default function Page() {
     return (
       <SafeAreaProvider className="dark:bg-slate-950">
         <SafeAreaView className="flex justify-center items-center h-full">
-          <ActivityIndicator size={128} color={"#484848"} />
+          <ActivityIndicator
+            size={128}
+            color={colorScheme === "dark" ? "white" : "#EF4444"}
+          />
         </SafeAreaView>
       </SafeAreaProvider>
     );
@@ -81,10 +91,13 @@ export default function Page() {
 
   return (
     <SafeAreaProvider className="dark:bg-slate-950">
-      <SafeAreaView className="px-8 py-4">
+      <SafeAreaView className="p-8">
         <Link href="/home" asChild>
           <Pressable className="flex flex-row gap-2 items-center">
-            <Ionicons name="caret-back" color={colorScheme === "dark" ? "white" : "#EF4444"} />
+            <Ionicons
+              name="caret-back"
+              color={colorScheme === "dark" ? "white" : "#EF4444"}
+            />
             <Text
               style={{ fontFamily: "WorkSans_400Regular" }}
               className="text-[#484848] dark:text-slate-50"
@@ -104,7 +117,7 @@ export default function Page() {
             className="text-[#484848] dark:text-slate-100"
             style={{ fontFamily: "WorkSans_400Regular" }}
           >
-            {data.artistName} • {data.year_album}
+            {data.artistName}
           </Text>
         </View>
       </SafeAreaView>

@@ -1,9 +1,7 @@
-import { Link, useLocalSearchParams } from "expo-router";
-import { useEffect } from "react";
+import { Link } from "expo-router";
 import { View, Text, Pressable } from "react-native";
 
 export default function RenderTabSection(props) {
-
   if (props.last == true) {
     return (
       <Link
@@ -26,6 +24,7 @@ export default function RenderTabSection(props) {
       </Link>
     );
   }
+
   return (
     <Link
       href={{

@@ -1,18 +1,11 @@
-import {
-  View,
-  Text,
-  Pressable,
-  ActivityIndicator,
-  ToastAndroid,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Pressable, ActivityIndicator, ToastAndroid } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as cheerio from "cheerio";
 import axios from "axios";
 import RenderTopTabsHeader from "./render_top_tabs_header";
 import GenerateTopTabs from "./generate_top_tabs";
 import { useColorScheme } from "nativewind";
-
 export default function RenderTopTabs() {
   const [isDataFetched, setDataFetched] = useState(false);
   const [data, setData] = useState([]);
@@ -51,7 +44,10 @@ export default function RenderTopTabs() {
       <>
         <RenderTopTabsHeader />
         <View className="p-8">
-          <ActivityIndicator size={"large"} color={colorScheme === "dark" ? "white" : "#EF4444"} />
+          <ActivityIndicator
+            size={"large"}
+            color={colorScheme === "dark" ? "white" : "#EF4444"}
+          />
         </View>
       </>
     );
@@ -67,7 +63,7 @@ export default function RenderTopTabs() {
       />
       <View className="flex flex-row gap-2 my-1">
         <Pressable
-          className="bg-red-500 p-2 px-3 rounded-lg active:bg-red-400"
+          className={`bg-red-500 p-2 px-3 rounded-lg active:bg-red-400 dark:bg-slate-50`}
           onPress={() => {
             switch (positionNums[0]) {
               case 0:
@@ -79,10 +75,13 @@ export default function RenderTopTabs() {
             }
           }}
         >
-          <Ionicons name="caret-back" color={"white"} />
+          <Ionicons
+            name="caret-back"
+            color={colorScheme === "dark" ? "#242424" : "white"}
+          />
         </Pressable>
         <Pressable
-          className="bg-red-500 p-2 px-3 rounded-lg active:bg-red-400"
+          className={`bg-red-500 p-2 px-3 rounded-lg active:bg-red-400 dark:bg-slate-50`}
           onPress={() => {
             switch (positionNums[1]) {
               case 100:
@@ -94,7 +93,10 @@ export default function RenderTopTabs() {
             }
           }}
         >
-          <Ionicons name="caret-forward" color={"white"} />
+          <Ionicons
+            name="caret-forward"
+            color={colorScheme === "dark" ? "#242424" : "white"}
+          />
         </Pressable>
       </View>
     </>

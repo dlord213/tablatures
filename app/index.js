@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { Pressable, Text, View } from "react-native";
+import React, { useContext, useState } from "react";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 import { useFonts } from "expo-font";
@@ -29,11 +29,11 @@ export default function Page() {
   }
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider className="dark:bg-slate-950">
       <SafeAreaView className="p-8 flex justify-between h-full">
         <View>
           <Text
-            className=" text-4xl text-red-500"
+            className={`text-4xl text-red-500`}
             style={{ fontFamily: "WorkSans_900Black" }}
           >
             Tablature
@@ -52,7 +52,7 @@ export default function Page() {
           }}
           style={{ width: "100%", height: 350 }}
         />
-        <View className="my-2">
+        <View>
           <Link href="/home" asChild replace>
             <Pressable className=" bg-red-500 p-2 rounded-md active:bg-red-400">
               <Text
